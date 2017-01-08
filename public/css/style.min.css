@@ -1,0 +1,15 @@
+﻿/*!
+ *
+ *
+ * Material Design for Bootstrap
+ * www.mdbootstrap.com
+ *
+ *
+ *//*!
+ *
+ *
+ * Material Design for Bootstrap
+ * www.mdbootstrap.com
+ *
+ *
+ */body,html{height:100%;margin:0;padding:0;background-color:#E2E2E2}.full-bg-img,footer,main{padding-left:240px}.main-wrapper{margin-top:20px}@media only screen and (max-width:480px){.main-wrapper{margin-left:0;margin-right:0}}@media only screen and (min-width:768px){.main-wrapper{margin-left:3%;margin-right:3%}}@media only screen and (max-width:992px){.full-bg-img,footer,main{padding-left:0}.main-wrapper{margin-left:4%;margin-right:4%}}@media only screen and (min-width:1400px){.main-wrapper{margin-left:9%;margin-right:9%}}.full-bg-img{background:url("http://mdbootstrap.com/images/regular/nature/img%20(39).jpg") center center no-repeat fixed;-webkit-background-size:cover;-moz-background-size:cover;-o-background-size:cover;background-size:cover;height:101%}.pt-color{background-color:#212121!important}.st-color{background-color:#1C2331!important}.et-color{background-color:#3F729B!important}.btn-ptc{background-color:#212121!important}.btn-ptc:focus,.btn-ptc:hover{background-color:#3b3b3b!important}.btn-stc{background-color:#1C2331!important}.btn-stc:focus,.btn-stc:hover{background-color:#2f3a51!important}.btn-etc{background-color:#3F729B!important}.btn-etc:focus,.btn-etc:hover{background-color:#548cb9!important}.button-collapse{position:fixed;color:#fff;z-index:999}

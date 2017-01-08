@@ -1,0 +1,15 @@
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+</head>
+<body>
+    <form id="test">
+        test
+        <button type="submit">Submit</button>
+    </form>
+    <script>
+        $("#test").ajaxSubmit({ url: '/', type: 'post' })
+    </script>
+</body>
+</html>

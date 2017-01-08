@@ -1,0 +1,11 @@
+{
+  "data": [
+    [
+      "<input type='checkbox' onchange='showDelete()' id='chkSelect1'><label for='chkSelect1'></label>",
+      "Title1",
+      "Desc1",
+      "2011/07/25",
+      "<div class='dropdown options' style='display:none;'><i class='fa fa-wrench' data-toggle='dropdown' aria-hidden='true'></i><ul class='dropdown-menu dropdown-table' id='dropdown1'><li><a href='#' data-toggle='modal' data-target='#modalEdit' onclick='EditTask(this)'>Edit</a></li><li><a href='#' onclick='MarkAsDone(this)'>Mark as Done</a></li><li><a href='#' onclick='DeleteFromInProgressAndAll(this)'>Delete</a></li><li><a href='#' onclick='ArchiveFromInProgressAndAll(this)'>Archive</a></li></ul></div>"
+    ]
+  ]
+}

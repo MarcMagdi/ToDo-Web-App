@@ -1,0 +1,349 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="2DOList">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>2DO List (Home Page)</title>
+
+    <!--<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css" />-->
+    <link rel="stylesheet" type="text/css" href="css/material.min.css" />
+
+    <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.11/css/dataTables.material.min.css" />-->
+    <link rel="stylesheet" type="text/css" href="css/dataTables.material.min.css" />
+    
+    <script type="text/javascript" src="js/bootbox.min.js"></script>
+
+    <!--<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>-->
+    <script type="text/javascript" src="Scripts/jquery-1.12.0.min.js"></script>
+
+    <!--<script type="text/javascript" src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>-->
+    <script type="text/javascript" src="Scripts/jquery.dataTables.min.js"></script>
+
+    <!--<script type="text/javascript" src="https://cdn.datatables.net/1.10.11/js/dataTables.material.min.js"></script>-->
+    <script type="text/javascript" src="Scripts/dataTables.material.min.js"></script>
+
+    <!-- Material Design Icons -->
+    <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+    <link href="css/icon.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">-->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet">
+
+    <!-- Our Own CSS-->
+    <link href="css/style.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+</head>
+
+<body layout="column">
+    <!-- Floating Button-->
+    <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+        <a class="btn-floating btn-large waves-effect waves-light red" id="deleteFloat" data-toggle="modal" data-target="#modalDelete">
+            <i class="material-icons">delete_forever</i>
+        </a>
+        <a class="btn-floating btn-large blue" data-toggle="modal" data-target="#modalAdd" id="addFloat">
+            <i class="large material-icons">add</i>
+        </a>
+    </div>
+
+    <!-- SideNav slide-out button -->
+    <a href="#" data-activates="slide-out" class="navbar-brand button-collapse"><i class="material-icons">menu</i></a>
+    <!--/. SideNav slide-out button -->
+    <!-- Sidebar navigation -->
+    <ul id="slide-out" class="side-nav fixed personal-side-nav light-side-nav">
+        <!-- Logo -->
+        <div class="logo-wrapper">
+            <a href="#">
+                <div class="avatar-wrapper">
+                    <img src="img/profile.jpg" class="img-responsive img-circle">
+                </div>
+            </a>
+        </div>
+        <!--/. Logo -->
+        <!--About-->
+        <div class="about text-center">
+            <p id="userName">
+               
+            </p>
+        </div>
+        <!--/.About-->
+        <div class="component-presentaton">
+            <div class="progress">
+                <div id="progressBarSideBar" class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                </div>
+            </div>
+        </div>
+        <!-- Side navigation links -->
+        <ul class="collapsible collapsible-accordion">
+            <li>
+                <a href="#" class="waves-effect rgba-grey-light st-blue" onclick="getAllTasks()">
+                    <i class="fa fa-tasks"></i> All Tasks <span class="badge blue" id="allTasksCount">0</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="waves-effect" onclick="getInProgress()">
+                    <i class="fa fa-spinner"></i> In Progress <span class="badge red" id="inProgressCount">0</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="waves-effect" onclick="getCompleted()">
+                    <i class="fa fa-check"></i> Completed <span class="badge green" id="completedCount">0</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="waves-effect" onclick="getArchived()">
+                    <i class="fa fa-archive" oncl></i> Archived <span class="badge orange" id="archivedCount">0</span>
+                </a>
+            </li>
+        </ul>
+        <!--/. Side navigation links -->
+        <!--Social-->
+        <ul class="social list-inline text-center">
+            <li class="waves-effect waves-light"><a class="icons-sm fb-ic"><i class="fa fa-facebook"> </i></a></li>
+            <li class="waves-effect waves-light"><a class="icons-sm tw-ic"><i class="fa fa-twitter"> </i></a></li>
+            <li class="waves-effect waves-light"><a class="icons-sm gplus-ic"><i class="fa fa-google-plus"> </i></a></li>
+            <li class="waves-effect waves-light"><a class="icons-sm li-ic"><i class="fa fa-linkedin"> </i></a></li>
+        </ul>
+        <!--/.Social-->
+    </ul>
+    <!--/. Sidebar navigation -->
+    <!-- Main Page -->
+    <div class="container-fluid">
+        <main>
+            <div id="header" class="navbar topBarAllTasks">
+                <div class="navToolbar">
+                    <div class="navBarTitle">BMI TODO List: <span id="titleBar">All Tasks</span></div>
+                    <div style="padding-left: 65%;"><a class="btn btn-warning btn-rounded waves-effect waves-light" href="/logout">Log out</a></div>
+                </div>
+            </div>
+
+            <table id="Table_AllTasks" class="mdl-data-table" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th width="10%">
+                            <span>
+                                <input type="checkbox" class="chk_SelectAll" id="chk_SelectAll_AllTasks" onchange="showDelete()"/>
+                                <label for="chk_SelectAll_AllTasks"></label>
+                            </span>
+                        </th>
+                        <th width="60%">Title</th>
+                        <th width="50%">Description</th>
+                        <th>Due Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+            <table id="Table_inProgress" class="mdl-data-table" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th width="10%">
+                            <span>
+                                <input type="checkbox" class="chk_SelectAll" id="chk_SelectAll_inProgress" onchange="showDelete()"/>
+                                <label for="chk_SelectAll_inProgress"></label>
+                            </span>
+                        </th>
+                        <th width="60%">Title</th>
+                        <th width="50%">Description</th>
+                        <th>Due Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+            <table id="Table_Archived" class="mdl-data-table" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th width="10%">
+                            <span>
+                                <input type="checkbox" class="chk_SelectAll" id="chk_SelectAll_Archived" onchange="showDelete()"/>
+                                <label for="chk_SelectAll_Archived"></label>
+                            </span>
+                        </th>
+                        <th width="60%">Title</th>
+                        <th width="50%">Description</th>
+                        <th>Due Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+            <table id="Table_Completed" class="mdl-data-table" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th width="10%">
+                            <span>
+                                <input type="checkbox" class="chk_SelectAll" id="chk_SelectAll_Completed" onchange="showDelete()" />
+                                <label for="chk_SelectAll_Completed"></label>
+                            </span>
+                        </th>
+                        <th width="60%">Title</th>
+                        <th width="50%">Description</th>
+                        <th>Due Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+        </main>
+    </div>
+
+    <!-- Modal --> 
+    <!--Add New Task Dialogue-->
+    <div class="modal fade" id="modalAdd" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4>Add New Task</h4>
+                </div>
+                <div class="modal-body" style="padding:40px 50px;">
+                    <div class="row">
+                        <form class="col-md-12" id="addTaskForm">
+                            <div class="row">
+                                <div class="input-field col-md-12">
+                                    <i class="material-icons prefix">note_add</i>
+                                    <input id="taskTitle" type="text" class="validate">
+                                    <label id="lblTitle" for="taskTitle">Title</label>
+                                </div>
+
+                                <div class="input-field col-md-12">
+                                    <i class="material-icons prefix">assignment</i>
+                                    <textarea id="description" class="materialize-textarea"></textarea>
+                                    <label id="lblDesc" for="description">Description</label>
+                                </div>
+
+                                <div class="input-field col-md-12">
+                                    <i class="material-icons prefix" id="dateRange">date_range</i>
+                                    <input type="date" id="datePicker" class="datepicker" placeholder="Choose Due Date">
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-primary waves-effect waves-light" onclick="AddNewTask()">Add</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!--Footer-->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default btn-default pull-left red" data-dismiss="modal">X</button>
+                    <div class="options">
+                    </div>
+                </div>
+                <!--/.Footer-->
+            </div>
+            <!-- /.Modal content-->
+        </div>
+    </div>
+
+    <!--Edit Task Dialogue-->
+    <div class="modal fade" id="modalEdit" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4>Edit Task</h4>
+                </div>
+                <div class="modal-body" style="padding:40px 50px;">
+                    <div class="row">
+                        <form class="col-md-12" id="editTaskForm">
+                            <div class="row">
+                                <div class="input-field col-md-12">
+                                    <i class="material-icons prefix" id="editTitleIcon">note_add</i>
+                                    <input id="edittaskTitle" type="text" class="validate">
+                                    <label id="lblEditTitle" for="edittaskTitle">Title</label>
+                                </div>
+
+                                <div class="input-field col-md-12">
+                                    <i class="material-icons prefix" id="editDescIcon">assignment</i>
+                                    <textarea id="editdescription" class="materialize-textarea"></textarea>
+                                    <label id="lblEditDesc" for="description">Description</label>
+                                </div>
+
+                                <div class="input-field col-md-12">
+                                    <i class="material-icons prefix" id="dateRange">date_range</i>
+                                    <input type="date" id="EditdatePicker" class="datepicker" placeholder="Choose Due Date">
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-primary waves-effect waves-light" onclick="DoneEditing()">Done Editing</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!--Footer-->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default btn-default pull-left red" data-dismiss="modal">X</button>
+                    <div class="options">
+                    </div>
+                </div>
+                <!--/.Footer-->
+            </div>
+            <!-- /.Modal content-->
+        </div>
+    </div>
+
+    <!--Delete Dialogue-->
+    <div class="modal fade" id="modalDelete" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h3 id="deleteCounter"></h3>
+                </div>
+                <div class="modal-body" style="padding:40px 50px;">
+                    <div class="row">
+                        <form class="col-md-12" id="addTaskForm">
+                            <div class="row">
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-primary waves-effect waves-light green" onclick="deleteChecked()">Confirm</button>
+                                    <button type="button" class="btn btn-primary waves-effect waves-light red" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- /.Modal content-->
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+    <!-- Material Design Bootstrap -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+
+    <script>
+        // Initialize collapse button
+        $(".button-collapse").sideNav();
+        // Initialize collapsible (uncomment the line below if you use the dropdown variation)
+        $('.collapsible').collapsible();
+    </script>
+
+    <script>
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
+        });
+    </script>
+
+    <!--App Core-->
+    <script src="js/config.js"></script>
+    <script src="js/save.js"></script>
+
+</body>
+
+</html>
